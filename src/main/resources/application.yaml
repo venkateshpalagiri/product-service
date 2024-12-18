@@ -1,1 +1,25 @@
-spring.application.name=ProductService
+spring:
+  application:
+    name: ProductService
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/product_service
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+server:
+  port: 8080
+
