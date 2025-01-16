@@ -1,11 +1,19 @@
 package com.venkatesh.ProductService.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-//@Data
-//@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductRequest {
+
+    private String productName;
+    private long productPrice;
+    private long productQuantity;
+
     public String getProductName() {
         return productName;
     }
@@ -18,7 +26,4 @@ public class ProductRequest {
         return productQuantity;
     }
 
-    private String productName;
-    private long productPrice;
-    private long productQuantity;
 }
