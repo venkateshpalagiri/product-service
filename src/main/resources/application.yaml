@@ -34,3 +34,12 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8080
+
+#the below swagger config is not needed
+springdoc:
+  api-docs:
+    groups:
+      enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui-custom.html
