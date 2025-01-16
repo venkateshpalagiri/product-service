@@ -1,11 +1,11 @@
 package com.venkatesh.ProductService.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductResponse {
@@ -28,20 +28,20 @@ public class ProductResponse {
 
 
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setProductPrice(long productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public void setProductQuantity(long productQuantity) {
-        this.productQuantity = productQuantity;
-    }
+//    public void setProductId(Long productId) {
+//        this.productId = productId;
+//    }
+//
+//    public void setProductName(String productName) {
+//        this.productName = productName;
+//    }
+//
+//    public void setProductPrice(long productPrice) {
+//        this.productPrice = productPrice;
+//    }
+//
+//    public void setProductQuantity(long productQuantity) {
+//        this.productQuantity = productQuantity;
+//    }
 
 }

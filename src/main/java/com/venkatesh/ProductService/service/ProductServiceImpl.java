@@ -5,37 +5,35 @@ import com.venkatesh.ProductService.model.ProductRequest;
 import com.venkatesh.ProductService.model.ProductResponse;
 import com.venkatesh.ProductService.repository.ProductRepository;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
+@Log4j2
 public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private ProductRepository productRepository;
 
-    private final Logger log=LoggerFactory.getLogger(ProductServiceImpl.class);
+//    private final Logger log=LoggerFactory.getLogger(ProductServiceImpl.class);
     @Override
     public long addProduct(ProductRequest productRequest) {
 
         log.info("Adding product...");
-//        Product product=Product.builder()
-//                .productName(productRequest.getProductName())
-//                .productPrice(productRequest.getProductPrice())
-//                .productQuantity(productRequest.getProductQuantity())
-//                .build();
+        Product product=Product.builder()
+                .productName(productRequest.getProductName())
+                .productPrice(productRequest.getProductPrice())
+                .productQuantity(productRequest.getProductQuantity())
+                .build();
 
 //        *** write logic for validation of incoming data ***
-        Product product=new Product();
-        product.setProductName(productRequest.getProductName());
-        product.setProductPrice(productRequest.getProductPrice());
-        product.setProductQuantity(productRequest.getProductQuantity());
+//        Product product=new Product();
+//        product.setProductName(productRequest.getProductName());
+//        product.setProductPrice(productRequest.getProductPrice());
+//        product.setProductQuantity(productRequest.getProductQuantity());
 
         productRepository.save(product);
         log.info("Product has been added successfully...");
@@ -44,21 +42,26 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getProductById(long productId) {
+    public ProductResponse getProductById(long productId) {
 
         Product product=productRepository.findById(productId)
                 .orElseThrow(()->new RuntimeException("Product not found with Id:"+productId));
 
-        ProductResponse productResponse=new ProductResponse();
+        ProductResponse productResponse=ProductResponse.builder()
+                .productId(product.getProductId())
+                .productName(product.getProductName())
+                .productPrice(product.getProductPrice())
+                .productQuantity(product.getProductQuantity())
+                .build();
 
-        productResponse.setProductId(product.getProductId());
-        productResponse.setProductName(product.getProductName());
-        productResponse.setProductPrice(product.getProductPrice());
-        productResponse.setProductQuantity(product.getProductQuantity());
-        System.out.println(productResponse);
+//        productResponse.setProductId(product.getProductId());
+//        productResponse.setProductName(product.getProductName());
+//        productResponse.setProductPrice(product.getProductPrice());
+//        productResponse.setProductQuantity(product.getProductQuantity());
+//        System.out.println(productResponse);
 
 
-        return product;
+        return productResponse;
     }
 
     @Override
@@ -78,6 +81,11 @@ public class ProductServiceImpl implements ProductService{
         if(product.getProductPrice()!=0 && product.getProductPrice()>=2000){
             product1.setProductPrice(product.getProductPrice());
         }
+
+//        ProductResponse productResponse=product.builder()
+//                        .productId(product.getProductId())
+//                                .productName(product.getProductName())
+//                                        .productPrice(productId)
 
         productRepository.save(product1);
 

@@ -9,9 +9,9 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Product {
 
     @Id
@@ -24,36 +24,36 @@ public class Product {
     @Column(name = "PRODUCT_QUANTITY")
     private long productQuantity;
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public long getProductPrice() {
-        return productPrice;
-    }
-
-    public long getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setProductPrice(long productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public void setProductQuantity(long productQuantity) {
-        this.productQuantity = productQuantity;
-    }
+//    public Long getProductId() {
+//        return productId;
+//    }
+//
+//    public String getProductName() {
+//        return productName;
+//    }
+//
+//    public long getProductPrice() {
+//        return productPrice;
+//    }
+//
+//    public long getProductQuantity() {
+//        return productQuantity;
+//    }
+//
+//    public void setProductId(Long productId) {
+//        this.productId = productId;
+//    }
+//
+//    public void setProductName(String productName) {
+//        this.productName = productName;
+//    }
+//
+//    public void setProductPrice(long productPrice) {
+//        this.productPrice = productPrice;
+//    }
+//
+//    public void setProductQuantity(long productQuantity) {
+//        this.productQuantity = productQuantity;
+//    }
 
 }
