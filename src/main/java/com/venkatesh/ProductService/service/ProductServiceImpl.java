@@ -1,11 +1,14 @@
 package com.venkatesh.ProductService.service;
 
+import com.venkatesh.ProductService.Exception.ProductNotFoundException;
 import com.venkatesh.ProductService.entity.Product;
 import com.venkatesh.ProductService.model.ProductRequest;
 import com.venkatesh.ProductService.model.ProductResponse;
 import com.venkatesh.ProductService.repository.ProductRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +48,7 @@ public class ProductServiceImpl implements ProductService{
     public ProductResponse getProductById(long productId) {
 
         Product product=productRepository.findById(productId)
-                .orElseThrow(()->new RuntimeException("Product not found with Id:"+productId));
+                .orElseThrow(()->new ProductNotFoundException("There's no record of Product with Id:"+productId, "PRODUCT_NOT_FOUND"));
 
         ProductResponse productResponse=ProductResponse.builder()
                 .productId(product.getProductId())
@@ -65,21 +68,21 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product updateProductById(long productId, Product product) {
+    public ProductResponse updateProductById(long productId, ProductRequest productRequest) {
 
-        Product product1=productRepository.findById(productId)
-                .orElseThrow(()->new RuntimeException("Product not found with id:"+productId));
+        Product product=productRepository.findById(productId)
+                .orElseThrow(()->new ProductNotFoundException("Product not found with id:"+productId,"PRODUCT_NOT_FOUND)"));
 
-        if(Objects.nonNull(product.getProductName())&&!"".equalsIgnoreCase(product.getProductName())){
-            product1.setProductName(product.getProductName());
+        if(Objects.nonNull(productRequest.getProductName())&&!"".equalsIgnoreCase(productRequest.getProductName())){
+            product.setProductName(productRequest.getProductName());
         }
 
-        if(product1.getProductQuantity()<product.getProductQuantity()){
-            product1.setProductQuantity(product.getProductQuantity());
+        if(product.getProductQuantity()<productRequest.getProductQuantity()){
+            product.setProductQuantity(productRequest.getProductQuantity());
         }
 
-        if(product.getProductPrice()!=0 && product.getProductPrice()>=2000){
-            product1.setProductPrice(product.getProductPrice());
+        if(productRequest.getProductPrice()!=0 && productRequest.getProductPrice()>=2000){
+            product.setProductPrice(productRequest.getProductPrice());
         }
 
 //        ProductResponse productResponse=product.builder()
@@ -87,16 +90,23 @@ public class ProductServiceImpl implements ProductService{
 //                                .productName(product.getProductName())
 //                                        .productPrice(productId)
 
-        productRepository.save(product1);
+        productRepository.save(product);
 
-        return product1;
+        ProductResponse productResponse=ProductResponse.builder()
+                .productId(product.getProductId())
+                .productName(product.getProductName())
+                .productPrice(product.getProductPrice())
+                .productQuantity(product.getProductQuantity())
+                .build();
+
+        return productResponse;
     }
 
     @Override
     public String deleteProductById(long productId) {
 
         Product product=productRepository.findById(productId)
-                .orElseThrow(()->new RuntimeException("Product not found with id:"+productId));
+                .orElseThrow(()->new ProductNotFoundException("Product not found with id:"+productId,"PRODUCT_NOT_FOUND)"));
 
         productRepository.delete(product);
         return "product has been delted with id: "+productId;

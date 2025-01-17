@@ -44,19 +44,19 @@ public class ProductController {
 
 //    Get all Products...
     @GetMapping("/all")
-    public List<Product> getAllProducts(){
+    public ResponseEntity<List<Product>> getAllProducts(){
 
         List<Product> productList=productService.getAllProducts();
 
-        return productList;
+        return new ResponseEntity<>(productList,HttpStatus.OK);
     }
 //    Updating a Product...
     @PutMapping("/updateProduct/{id}")
-    public ResponseEntity<Product> updateProductById(@PathVariable("id") long productId,@RequestBody Product product){
+    public ResponseEntity<ProductResponse> updateProductById(@PathVariable("id") long productId,@RequestBody ProductRequest productRequest){
 
-        Product product1=productService.updateProductById(productId,product);
+        ProductResponse productResponse=productService.updateProductById(productId,productRequest);
 
-        return new ResponseEntity<>(product,HttpStatus.OK);
+        return new ResponseEntity<>(productResponse,HttpStatus.OK);
     }
 
 //    Deleting a Product...
